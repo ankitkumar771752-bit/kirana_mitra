@@ -18,7 +18,12 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: true,
+      default: '',
+    },
+    category_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null,
     },
     stock: {
       type: Number,
@@ -32,7 +37,11 @@ const productSchema = new mongoose.Schema(
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+    },
+    store_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Store',
+      default: null,
     },
     isFeatured: {
       type: Boolean,

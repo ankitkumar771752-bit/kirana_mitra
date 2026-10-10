@@ -26,15 +26,39 @@ const orderSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+    },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+    },
+    store_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Store',
+      default: null,
+    },
+    delivery_partner_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'DeliveryPartner',
+      default: null,
     },
     items: [orderItemSchema],
     totalAmount: {
       type: Number,
-      required: true,
+      default: 0,
+      min: 0,
+    },
+    total_amount: {
+      type: Number,
+      default: 0,
       min: 0,
     },
     status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
+      default: 'pending',
+    },
+    order_status: {
       type: String,
       enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
       default: 'pending',
@@ -44,9 +68,13 @@ const orderSchema = new mongoose.Schema(
       enum: ['pending', 'paid', 'failed'],
       default: 'pending',
     },
+    payment_method: {
+      type: String,
+      default: '',
+    },
     deliveryAddress: {
       type: String,
-      required: true,
+      default: '',
     },
   },
   { timestamps: true }

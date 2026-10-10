@@ -42,6 +42,36 @@ This project is a Node.js + Express + MongoDB backend for a grocery and local st
    http://localhost:5000
    ```
 
+## API Endpoints
+
+Protected endpoints require `Authorization: Bearer <token>`. JSON request bodies use `Content-Type: application/json`.
+Public sign-up creates customer accounts only. Provision the first admin account through a trusted database setup before using admin-only endpoints.
+
+| Feature | Method | Endpoint | Access |
+| --- | --- | --- | --- |
+| Sign up | POST | `/api/auth/signup` | Public |
+| Log in | POST | `/api/auth/login` | Public |
+| Profile | GET, PUT | `/api/users/profile` | Authenticated |
+| Users | GET, POST | `/api/users` | Admin |
+| User by ID | GET, PUT, DELETE | `/api/users/:id` | Admin |
+| Products | GET, POST | `/api/products` | Read public, create authenticated |
+| Product by ID | GET, PUT, DELETE | `/api/products/:id` | Read public, change authenticated |
+| Categories | GET, POST | `/api/categories` | Read public, change authenticated |
+| Category by ID | PUT, DELETE | `/api/categories/:id` | Authenticated |
+| Cart | GET, POST | `/api/cart` | Authenticated |
+| Cart item | PUT, DELETE | `/api/cart/:id` | Authenticated |
+| Orders | GET, POST | `/api/orders` | Authenticated |
+| Order by ID | GET | `/api/orders/:id` | Authenticated |
+| Order status | PUT | `/api/orders/:id/status` | Authenticated |
+| Stores | GET, POST | `/api/stores` | Read public, create authenticated |
+| Store by ID | GET, PUT, DELETE | `/api/stores/:id` | Read public, change authenticated |
+| Deliveries | GET, POST | `/api/deliveries` | Authenticated |
+| Delivery status | PUT | `/api/deliveries/:id/status` | Authenticated |
+| Payments | GET, POST | `/api/payments` | Authenticated |
+| Payment status | PUT | `/api/payments/:id/status` | Admin |
+
+Cart requests use `{ "productId": "<product-id>", "quantity": 2 }`; update requests use `{ "quantity": 3 }`. Delivery creation uses `{ "orderId": "<order-id>", "assignedTo": "<user-id>" }`, where `assignedTo` is optional. Payment creation uses `{ "orderId": "<order-id>", "method": "upi" }`; accepted methods are `cash`, `card`, `upi`, and `wallet`. Payment records use the order total and start as `pending`. This API records payment data and status; no payment-provider charge or verification is configured.
+
 ## Project Structure
 
 ```bash

@@ -4,25 +4,33 @@ const storeSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
+    },
+    store_name: {
+      type: String,
+      trim: true,
+      default: '',
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+    },
+    owner_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     phone: {
       type: String,
-      required: true,
+      default: '',
     },
     address: {
       type: String,
-      required: true,
+      default: '',
     },
     city: {
       type: String,
-      required: true,
+      default: '',
     },
     isOpen: {
       type: Boolean,

@@ -1,17 +1,35 @@
-const mongoose = require('mongoose');
+
+require('dotenv').config();
+
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT || 3306),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  charset: 'utf8mb4',
+});
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const connection = await pool.getConnection();
 
-    console.log(`MongoDB connected: ${conn.connection.host}`);
+    console.log('Hostinger MySQL connected successfully!');
+
+    connection.release();
+    return pool;
   } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
-    process.exit(1);
+    console.error('MySQL connection failed:', error.message);
+    throw error;
   }
 };
 
-module.exports = connectDB;
+module.exports = {
+  pool,
+  connectDB,
+};
