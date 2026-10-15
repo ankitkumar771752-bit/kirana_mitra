@@ -10,13 +10,13 @@ const generateToken = (user) => {
       role: user.role,
     },
     process.env.JWT_SECRET,
-    { expiresIn: '7d' }
+    { expiresIn: '90d' }
   );
 };
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, phone, role } = req.body;
+    const { name, email, password, phone } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Name, email and password are required.' });
@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userRole = role || 'customer';
+    const userRole = 'customer';
 
     const [result] = await pool.execute(
       'INSERT INTO users (name, email, password, phone, role) VALUES (?, ?, ?, ?, ?)',
@@ -43,11 +43,8 @@ const registerUser = async (req, res) => {
       role: userRole,
     };
 
-    const token = generateToken(user);
-
     res.status(201).json({
       message: 'User registered successfully.',
-      token,
       user,
     });
   } catch (error) {

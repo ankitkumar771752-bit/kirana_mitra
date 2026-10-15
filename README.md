@@ -1,6 +1,6 @@
 # KiranaMitra Backend
 
-This project is a Node.js + Express + MongoDB backend for a grocery and local store management application.
+This project is a Node.js + Express + MySQL backend for a grocery and local store management application.
 
 ## Features
 
@@ -18,7 +18,7 @@ This project is a Node.js + Express + MongoDB backend for a grocery and local st
 
 - Node.js
 - Express.js
-- MongoDB with Mongoose
+- MySQL with `mysql2`
 - JWT authentication
 - CORS
 - Multer for file uploads
@@ -30,14 +30,14 @@ This project is a Node.js + Express + MongoDB backend for a grocery and local st
    npm install
    ```
 
-2. Create a MongoDB database and update the `.env` file.
-
-3. Start the server:
+2. Create a MySQL database and configure `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` in `.env`.
+3. Select the database configured as `DB_NAME` and run [`database/schema.sql`](./database/schema.sql) to create the 14 tables used by the APIs.
+4. Set `JWT_SECRET` in `.env`, then start the server:
    ```bash
    npm run dev
    ```
 
-4. The API will run on:
+The API will run on:
    ```bash
    http://localhost:5000
    ```
