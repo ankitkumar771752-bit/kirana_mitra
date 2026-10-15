@@ -17,14 +17,21 @@ const pool = mysql.createPool({
 
 const connectDB = async () => {
   try {
+    const requiredConfig = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+    const missingConfig = requiredConfig.filter((key) => process.env[key] === undefined || process.env[key] === '');
+
+    if (missingConfig.length > 0) {
+      throw new Error(`Missing required database environment variables: ${missingConfig.join(', ')}`);
+    }
+
     const connection = await pool.getConnection();
 
-    console.log('Hostinger MySQL connected successfully!');
+    console.log('MySQL connected successfully.');
 
     connection.release();
     return pool;
   } catch (error) {
-    console.error('MySQL connection failed:', error.message);
+    console.error('MySQL connection failed:', error);
     throw error;
   }
 };

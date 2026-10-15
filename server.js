@@ -107,7 +107,7 @@ const startServer = async () => {
       });
     });
   } catch (error) {
-    console.error('Server startup failed:', error.message);
+    console.error('Server startup failed:', error);
     if (pool) {
       await pool.end();
     }

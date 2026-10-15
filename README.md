@@ -42,6 +42,8 @@ The API will run on:
    http://localhost:5000
    ```
 
+For Render or another hosting provider, add `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, and `JWT_SECRET` in the service's environment settings. The MySQL host must be reachable from the hosting provider; do not use `localhost` for a database hosted elsewhere. If the database is on Hostinger, enable remote MySQL access there and allow the app host's outbound connection as required by Hostinger.
+
 ## API Endpoints
 
 Protected endpoints require `Authorization: Bearer <token>`. JSON request bodies use `Content-Type: application/json`.
